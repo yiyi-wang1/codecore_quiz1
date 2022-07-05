@@ -33,6 +33,7 @@ app.use((req, res, next) => {
 //Show all clucks to index page
 app.get('/', (req, res) => {
     knex('clucks').orderBy('created_at', 'desc').then(clucks => {
+        let tag = {};
         clucks.forEach(cluck => {
             const time = (Date.now() - Date.parse(cluck.created_at)) / (1000 * 60); //converted to minutes
             let readTime = '';
@@ -42,19 +43,36 @@ app.get('/', (req, res) => {
                     if (minutes == 0) {
                         readTime = "Just now";
                     } else {
-                        readTime = minutes + " mins ago";
+                        if (minutes > 1) {
+                            readTime = minutes + " mins ago";
+                        } else {
+                            readTime = minutes + " min ago";
+                        }
                     }
                 } else {
                     hours = Math.floor(time / 60);
-                    readTime = hours + " hours ago";
+                    if (hours > 1) {
+                        readTime = hours + " hours ago";
+                    } else {
+                        readTime = hours + " hour ago";
+                    }
                 }
             } else {
                 days = Math.floor(time / (60 * 24));
                 readTime = days + " days ago";
             }
             cluck.readTime = readTime;
+            const words = cluck.content.split(" ");
+            words.forEach(word => {
+                if (word.startsWith('#')) {
+                    tag[word] = tag[word] ? tag[word] + 1 : 1;
+                }
+            })
         })
-        res.render('clucks/all', { clucks: clucks });
+        const sortedTag = Object.entries(tag)
+            .sort(([, a], [, b]) => b - a)
+            .reduce((r, [k, v]) => ({ ...r, [k]: v }), {});
+        res.render('clucks/all', { clucks: clucks, tag: sortedTag });
     })
 })
 
