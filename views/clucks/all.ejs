@@ -1,0 +1,25 @@
+<%- include('../partials/header.ejs') %>
+    <div class="ms-3 mt-3">
+        <% for(let cluck of clucks){ %>
+            <div class="card mb-3" style="max-width: 540px;">
+                <div class="card-body d-flex flex-row align-items-start">
+                    <img src="../../images/rooster.png" class="img-fluid rounded me-2" alt="..." width="60" height="60">
+                    <div class="flex-grow-1">
+                        <h5 class="card-title d-flex flex-row justify-content-between">
+                            <%- cluck.username %>
+                                <small class="text-muted">
+                                    <%- cluck.readTime %>
+                                </small>
+                        </h5>
+                        <p class="card-text">
+                            <%-cluck.content %>
+                        </p>
+                        <% if(cluck.image_url){ %>
+                            <img src="<%-cluck.image_url%> " class="img-fluid" alt="cluck image">
+                            <% } %>
+                    </div>
+                </div>
+            </div>
+            <% } %>
+    </div>
+    <%- include('../partials/footer.ejs') %>

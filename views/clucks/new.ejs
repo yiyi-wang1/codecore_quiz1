@@ -1,0 +1,23 @@
+<%- include('../partials/header.ejs') %>
+    <div class="ms-3 card p-3 mt-3" style="max-width: 540px;">
+        <% if(err){ %>
+            <div class="alert alert-danger" role="alert">
+                <%- err %>
+            </div>
+            <% } %>
+                <form action="/clucks" method="post">
+                    <div class="mb-3">
+                        <label for="content" class="form-label">Content</label>
+                        <textarea type="text" class="form-control" id="content" name="content"
+                            placeholder="Whatchoo cluckin'about?" rows="5"></textarea>
+                    </div>
+                    <div class="mb-3">
+                        <label for="image_url" class="form-label">Image URL</label>
+                        <input type="text" class="form-control" id="image_url" name="image_url"
+                            placeholder="e.g. https://picsum.photos/id/1/200/300">
+                    </div>
+                    <button type="submit" class="btn btn-outline-secondary px-5 float-end">Submit</button>
+                </form>
+
+    </div>
+    <%- include('../partials/footer.ejs') %>
