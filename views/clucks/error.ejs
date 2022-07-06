@@ -1,0 +1,18 @@
+<%- include('../partials/header.ejs') %>
+    <div class="alert alert-danger mx-3" role="alert">
+        Please Login first!
+    </div>
+    <h1 class="text-center">Redirect to Login Page in <span id="timer">3</span> seconds</h1>
+
+    <script>
+        let count = 2;
+        function update() {
+            document.getElementById("timer").innerHTML = count;
+            count--;
+            if (count == 0) {
+                window.location = "/log_in";
+            }
+        }
+        setInterval(update, 1000);
+    </script>
+    <%- include('../partials/footer.ejs') %>
